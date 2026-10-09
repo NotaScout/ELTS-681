@@ -48,4 +48,4 @@ pts2=np.float32([[20,30],[30,20],[20,40]])
 affM = cv.getAffineTransform(pts1,pts2)
 affimg = cv.warpAffine(img, affM, (width, height))
 
-cv.imwrite('test-images/output_testimage_affine.png', affimg)
+cv.imwrite('test-images/output/output_testimage_affine.png', affimg)
