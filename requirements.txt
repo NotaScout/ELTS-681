@@ -157,11 +157,7 @@ tf2-sensor-msgs==0.25.23
 tf2-tools==0.25.23
 topic-monitor==0.20.10
 trajectory-msgs==4.9.2
-# Editable install with no version control (turtlebot3-example==2.3.7)
--e /home/william/turtlebot3_ws/build/turtlebot3_example
 turtlebot3-msgs==2.4.0
-# Editable install with no version control (turtlebot3-teleop==2.3.7)
--e /home/william/turtlebot3_ws/build/turtlebot3_teleop
 turtlesim==1.4.3
 unique-identifier-msgs==2.2.1
 visualization-msgs==4.9.2

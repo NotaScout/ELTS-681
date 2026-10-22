@@ -17,10 +17,10 @@ print(img.shape)
 gimg = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
 print(gimg.shape)
 # display the image
-cv.imshow("Original RGB image", img)
+# cv.imshow("Original RGB image", img)
 # cv.waitKey(0)
 # delete window
-cv.destroyAllWindows()
+# cv.destroyAllWindows()
 # save an image file
 shrink = cv.resize(img, None, fx=0.5, fy=0.5, interpolation=cv.INTER_AREA)
 
