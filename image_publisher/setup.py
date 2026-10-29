@@ -24,6 +24,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            'run = image_publisher.img_pub:main'
         ],
     },
 )
