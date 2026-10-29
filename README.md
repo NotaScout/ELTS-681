@@ -16,8 +16,8 @@ sudo apt install ros-humble-image-transport-plugins`
 # run image publisher 
 
 # pi side
-
+1
 `. install/setup.bash`
-
+2
 `ros2 run image_publisher run`
 
