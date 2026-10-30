@@ -21,3 +21,11 @@ sudo apt install ros-humble-image-transport-plugins`
 2
 `ros2 run image_publisher run`
 
+# other stuff that can go wrong
+
+_ARRAY_API not found: 
+`
+pip uninstall numpy
+pip install "numpy<2"
+`
+
