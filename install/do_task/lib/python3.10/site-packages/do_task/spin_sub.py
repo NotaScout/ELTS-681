@@ -8,10 +8,10 @@ from geometry_msgs.msg import Twist
 class MinimalSubscriber(Node):
 
     def __init__(self):
-        super().__init__('minimal_subscriber')
+        super().__init__('image_subscriber')
         self.subscription = self.create_subscription(
             String,
-            'topic',
+            'robot_functions',
             self.listener_callback,
             10)
 
