@@ -23,6 +23,7 @@ VisionRunningMode = mp.tasks.vision.RunningMode
 # custom class
 
 from gesture_interpreter import HandDetector
+from object_interpreter import ObjectDetectorWrapper
 
 
 # Store the latest detection results
@@ -39,16 +40,20 @@ class ImageSubscriber(Node):
             10)
         self.subscription  # prevent unused variable warning
         self.hand_detector = HandDetector()
+        self.object_detector = ObjectDetectorWrapper()
         self.cv_bridge = CvBridge()
 
     def listener_callback(self, msg):
         try:
-            print("recv: 1")
+            print("recv: image")
             # self.get_logger().info('I heard: "%s"' % msg.data)
-            
+            publish = "None"
             image = self.cv_bridge.compressed_imgmsg_to_cv2(msg, desired_encoding='bgr8')
             hand_result = self.hand_detector.run_detection(image)
             print(f"hand_result = {hand_result}")
+            if hand_result == "None":
+                detected_object = self.object_detector.run_detection(image)
+                print(f"detected Object = {detected_object}")
         except Exception as e:
             print(e)
         
