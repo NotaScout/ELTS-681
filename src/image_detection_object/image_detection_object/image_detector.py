@@ -42,6 +42,11 @@ class ImageSubscriber(Node):
         self.hand_detector = HandDetector()
         self.object_detector = ObjectDetectorWrapper()
         self.cv_bridge = CvBridge()
+        self.string_publisher = self.create_publisher(
+            String,
+            'robot_functions',
+            10
+        )
 
     def listener_callback(self, msg):
         try:
@@ -49,11 +54,17 @@ class ImageSubscriber(Node):
             # self.get_logger().info('I heard: "%s"' % msg.data)
             publish = "None"
             image = self.cv_bridge.compressed_imgmsg_to_cv2(msg, desired_encoding='bgr8')
-            hand_result = self.hand_detector.run_detection(image)
-            print(f"hand_result = {hand_result}")
-            if hand_result == "None":
-                detected_object = self.object_detector.run_detection(image)
-                print(f"detected Object = {detected_object}")
+            result = self.hand_detector.run_detection(image)
+            # print(f"hand result = {result}")
+            if result == "None":
+                result = self.object_detector.run_detection(image)
+                print(f"detected Object = {result}")
+                        # Publish the string message onto ROS
+            
+            pub_msg = String()
+            pub_msg.data = str(result)
+            self.string_publisher.publish(pub_msg)
+
         except Exception as e:
             print(e)
         
