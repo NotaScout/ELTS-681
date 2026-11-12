@@ -9,6 +9,13 @@ ObjectDetector = mp.tasks.vision.ObjectDetector
 ObjectDetectorOptions = mp.tasks.vision.ObjectDetectorOptions
 VisionRunningMode = mp.tasks.vision.RunningMode
 
+OBJECTS_DETECTION_LIST = [
+    "cell phone",
+    "laptop",
+    'tv',
+    'backpack'
+]
+
 class ObjectDetectorWrapper:
     def __init__(self, model_path="test_mediapipe/efficientdet_lite0.tflite", score_threshold=0.5):
         # Store latest detection results thread-safely
@@ -62,12 +69,16 @@ class ObjectDetectorWrapper:
         if result is not None and result.detections:
             height, width= frame.shape
             
-            # Grab only the first detection
-            detection = result.detections[0]
-            if detection.categories:
-                category = detection.categories[0]
-                category_name = category.category_name
+            detected_objects = []
 
-                return category_name
+
+            for detection in result.detections:
+                if detection.categories:
+                    category_name = detection.categories[0].category_name
+
+                    if category_name in OBJECTS_DETECTION_LIST:
+                        return category_name
+
+            return None
 
         return "None"

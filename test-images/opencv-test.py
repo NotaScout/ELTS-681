@@ -11,7 +11,7 @@ import numpy as np
 
 
 # read an image file
-img = cv.imread("test-images/testpic.jpg")
+img = cv.imread("test-images/test_image_src/testpic.jpg")
 print(img.shape)
 # color to gray
 gimg = cv.cvtColor(img, cv.COLOR_BGR2GRAY)

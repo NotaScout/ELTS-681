@@ -24,6 +24,8 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            
+            'run = image_detection_object.image_detector:main'
         ],
     },
 )

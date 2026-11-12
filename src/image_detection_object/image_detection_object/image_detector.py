@@ -50,7 +50,7 @@ class ImageSubscriber(Node):
 
     def listener_callback(self, msg):
         try:
-            print("recv: image")
+            # print("recv: image")
             # self.get_logger().info('I heard: "%s"' % msg.data)
             publish = "None"
             image = self.cv_bridge.compressed_imgmsg_to_cv2(msg, desired_encoding='bgr8')
@@ -58,12 +58,15 @@ class ImageSubscriber(Node):
             # print(f"hand result = {result}")
             if result == "None":
                 result = self.object_detector.run_detection(image)
-                print(f"detected Object = {result}")
+                
                         # Publish the string message onto ROS
             
             pub_msg = String()
             pub_msg.data = str(result)
             self.string_publisher.publish(pub_msg)
+            
+            if result != 'person':
+                print(f"detected thing = {result}")
 
         except Exception as e:
             print(e)
