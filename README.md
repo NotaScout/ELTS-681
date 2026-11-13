@@ -14,6 +14,19 @@ colcon build
 `
 sudo apt install ros-humble-image-transport-plugins`
 
+# command to enable thing
+
+`
+export TURTLEBOT3_MODEL=waffle
+`
+# Pkill camera
+`
+fuser -v /dev/video*
+`
+`
+kill -9 <PID>
+`
+
 # run image publisher 
 
 # pi side
