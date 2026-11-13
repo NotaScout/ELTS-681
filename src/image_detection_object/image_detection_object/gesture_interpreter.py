@@ -68,7 +68,7 @@ class HandDetector:
         else:
             return "None"
 
-    def run_detection(self, frame) -> str:
+    def run_detection(self, frame):
         """
         Takes a raw OpenCV/NumPy image frame directly 
         (e.g., converted from cv_bridge in your ROS node).
@@ -99,7 +99,7 @@ class HandDetector:
 
         # Display detected hands and gestures if available
         if result is not None and result.hand_landmarks:
-            height, width = frame.shape
+            height, width = frame.shape[:2]
 
             for hand_landmarks in result.hand_landmarks:
                 # Draw hand connections
