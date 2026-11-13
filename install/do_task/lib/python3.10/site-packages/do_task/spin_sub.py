@@ -29,7 +29,7 @@ class MinimalSubscriber(Node):
         if not self.ready:
             return
         
-        if(msg.data == "Open Palm"):
+        if(msg.data == "open palm"):
             self.ready = False
             move = Twist()
             move.linear.x = 0.1
@@ -39,7 +39,7 @@ class MinimalSubscriber(Node):
             # Stop the robot after 3 seconds
             self.timer = self.create_timer(3.0, self.stop_robot)
 
-        elif(msg.data == "Fist"):
+        elif(msg.data == "fist"):
             self.ready = False
             move = Twist()
             move.linear.x = 0.0
@@ -48,7 +48,7 @@ class MinimalSubscriber(Node):
             self.wheel_publisher.publish(move)
             self.timer = self.create_timer(3.0, self.stop_robot)
 
-        elif(msg.data == "Peace Sign"):
+        elif(msg.data == "peace sign"):
             self.ready = False
             move = Twist()
             move.linear.x = 0.0
@@ -57,7 +57,7 @@ class MinimalSubscriber(Node):
             self.wheel_publisher.publish(move)
             self.timer = self.create_timer(6.28, self.stop_robot)
 
-        elif(msg.data == "Pointing"):
+        elif(msg.data == "pointing"):
             self.ready = False
             move = Twist()
             move.linear.x = -0.1
