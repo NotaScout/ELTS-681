@@ -14,11 +14,11 @@ class ImagePublisher(Node):
             '/video_frames/compressed',
             10
         )
-
-        self.cap = cv2.VideoCapture('/dev/video0', cv2.CAP_V4L2)
+        self.camera_loc = '/dev/video0'
+        self.cap = cv2.VideoCapture(self.camera_loc, cv2.CAP_V4L2)
 
         if not self.cap.isOpened():
-            raise RuntimeError('Could not open camera at /dev/video0')
+            raise RuntimeError(f'Could not open camera at {self.camera_loc}')
 
         self.br = cv2
         self.timer = self.create_timer(0.1, self.publish_images)
@@ -35,12 +35,12 @@ class ImagePublisher(Node):
             return
 
         # Convert BGR camera frame to grayscale
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        output_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
         # Compress grayscale image to JPEG
         success, encoded = cv2.imencode(
             '.jpg',
-            gray,
+            output_frame,
             [cv2.IMWRITE_JPEG_QUALITY, 70]
         )
 
@@ -51,7 +51,7 @@ class ImagePublisher(Node):
         msg = CompressedImage()
         msg.header.stamp = self.get_clock().now().to_msg()
         msg.header.frame_id = 'camera_optical_frame'
-        msg.format = 'mono8; jpeg'
+        msg.format = 'rgb8; jpeg'
         msg.data = encoded.tobytes()
         
         self.publisher_.publish(msg)
