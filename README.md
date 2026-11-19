@@ -43,3 +43,10 @@ pip uninstall numpy
 pip install "numpy<2"
 `
 
+# manipulation
+
+`$ sudo apt install ros-humble-dynamixel-sdk ros-humble-ros2-control ros-humble-ros2-controllers ros-humble-gripper-controllers ros-humble-moveit*
+$ cd ~/turtlebot3_ws/src/
+$ git clone -b humble https://github.com/ROBOTIS-GIT/turtlebot3_manipulation.git
+$ cd ~/turtlebot3_ws && colcon build --symlink-install
+`
