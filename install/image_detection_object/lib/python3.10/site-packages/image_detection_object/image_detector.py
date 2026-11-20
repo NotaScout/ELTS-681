@@ -9,7 +9,7 @@ from cv_bridge import CvBridge
 
 # image processing 
 
-import cv2
+import cv2 as cv
 import mediapipe as mp
 import time
 import threading
@@ -21,9 +21,9 @@ ObjectDetectorOptions = mp.tasks.vision.ObjectDetectorOptions
 VisionRunningMode = mp.tasks.vision.RunningMode
 
 # custom class
+from image_detection_object.gesture_interpreter import HandDetector
 
-from gesture_interpreter import HandDetector
-from object_interpreter import ObjectDetectorWrapper
+from image_detection_object.object_interpreter import ObjectDetectorWrapper
 
 
 # Store the latest detection results
@@ -54,17 +54,25 @@ class ImageSubscriber(Node):
             # self.get_logger().info('I heard: "%s"' % msg.data)
             publish = "None"
             image = self.cv_bridge.compressed_imgmsg_to_cv2(msg, desired_encoding='bgr8')
-            result = self.hand_detector.run_detection(image)
+            
+            result, frame = self.hand_detector.run_detection(image)
             # print(f"hand result = {result}")
             if result == "None":
-                result = self.object_detector.run_detection(image)
+                result, frame = self.object_detector.run_detection(image)
                 
                         # Publish the string message onto ROS
+            # else:
             
             pub_msg = String()
             pub_msg.data = str(result)
             self.string_publisher.publish(pub_msg)
             
+            if frame is not None and frame.size > 0:
+                cv.imshow("Annotated", frame)
+                cv.waitKey(1)
+                # cv.imshow(1)
+                
+
             if result != 'person':
                 print(f"detected thing = {result}")
 

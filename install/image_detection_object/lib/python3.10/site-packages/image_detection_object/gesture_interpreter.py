@@ -68,11 +68,12 @@ class HandDetector:
         else:
             return "None"
 
-    def run_detection(self, frame) -> str:
+    def run_detection(self, frame):
         """
         Takes a raw OpenCV/NumPy image frame directly 
         (e.g., converted from cv_bridge in your ROS node).
         """
+        gesture = None
         if frame is None:
             print("Received empty frame.")
             return "None"
@@ -82,7 +83,7 @@ class HandDetector:
 
         # Convert BGR image to RGB for MediaPipe
         rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-
+        frame = rgb_frame
         # Create MediaPipe image
         mp_image = mp.Image(
             image_format=mp.ImageFormat.SRGB,
@@ -99,25 +100,53 @@ class HandDetector:
 
         # Display detected hands and gestures if available
         if result is not None and result.hand_landmarks:
-            height, width = frame.shape
+            height, width = frame.shape[:2]
 
             for hand_landmarks in result.hand_landmarks:
+
                 # Draw hand connections
                 for start, end in HAND_CONNECTIONS:
                     x1 = int(hand_landmarks[start].x * width)
                     y1 = int(hand_landmarks[start].y * height)
+
                     x2 = int(hand_landmarks[end].x * width)
                     y2 = int(hand_landmarks[end].y * height)
 
-                    cv2.line(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+                    cv2.line(
+                        frame,
+                        (x1, y1),
+                        (x2, y2),
+                        (0, 255, 0),
+                        2
+                    )
 
                 # Draw landmark points
                 for landmark in hand_landmarks:
                     x = int(landmark.x * width)
                     y = int(landmark.y * height)
-                    cv2.circle(frame, (x, y), 5, (0, 0, 255), -1)
 
+                    cv2.circle(
+                        frame,
+                        (x, y),
+                        5,
+                        (0, 0, 255),
+                        -1
+                    )
+                gesture = self._detect_gesture(hand_landmarks)  
+                             # Display gesture name
+                cv2.putText(
+                    frame,
+                    "Gesture: " + gesture,
+                    (30, 50),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    1,
+                    (0, 255, 255),
+                    2,
+                    cv2.LINE_AA
+                )
+
+                # print(len(frame))
                 # Classify and return the gesture of the first detected hand
-                return self._detect_gesture(hand_landmarks)
+                return gesture, frame
 
-        return "None"
+        return "None", frame
