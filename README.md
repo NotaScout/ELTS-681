@@ -43,3 +43,10 @@ pip uninstall numpy
 pip install "numpy<2"
 `
 
+`
+rm -rf build/ install/ log/
+colcon build
+source install/setup.bash
+ros2 run image_detection_object run
+`
+
