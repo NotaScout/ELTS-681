@@ -21,9 +21,9 @@ ObjectDetectorOptions = mp.tasks.vision.ObjectDetectorOptions
 VisionRunningMode = mp.tasks.vision.RunningMode
 
 # custom class
+from image_detection_object.gesture_interpreter import HandDetector
 
-from gesture_interpreter import HandDetector
-from object_interpreter import ObjectDetectorWrapper
+from image_detection_object.object_interpreter import ObjectDetectorWrapper
 
 
 # Store the latest detection results
