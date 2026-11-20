@@ -42,4 +42,8 @@ _ARRAY_API not found:
 pip uninstall numpy
 pip install "numpy<2"
 `
-
+`
+cd ~/turtlebot3_ws/src/
+git clone -b humble https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
+cd ~/turtlebot3_ws && colcon build --symlink-install
+`
