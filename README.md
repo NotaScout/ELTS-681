@@ -43,3 +43,9 @@ pip uninstall numpy
 pip install "numpy<2"
 `
 
+`
+ros2 launch turtlebot3_manipulation_bringup hardware.launch.py
+ros2 launch turtlebot3_manipulation_moveit_config moveit_core.launch.py
+ros2 launch turtlebot3_manipulation_moveit_config servo.launch.py
+ros2 run turtlebot3_manipulation_teleop turtlebot3_manipulation_teleop
+`
