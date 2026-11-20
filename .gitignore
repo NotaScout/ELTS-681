@@ -68,5 +68,3 @@ vcpkg_installed/
 Testing/
 .cache/
 venv/
-
-install/
